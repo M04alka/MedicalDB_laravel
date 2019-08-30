@@ -1,0 +1,42 @@
+.mar_from_nav {
+  margin:7%;
+}
+.mar_bottom {
+  margin-bottom:1%;
+}
+
+.nav_shadow{-webkit-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 5px 5px 0px rgba(0,0,0,0.75);
+}
+
+.backs{
+	background-image: url(https://mdbootstrap.com/img/Photos/Others/background.jpg);
+	 /* Full height */
+  height: 100%; 
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+;
+}
+
+.save{
+	background-image: url(https://img.freepik.com/free-vector/abstract-medical-wallpaper-template-design_53876-61802.jpg?size=626&ext=jpg);
+	background-image: url(https://cdn.pixabay.com/photo/2015/05/29/16/36/seamless-tiling-clouds-789451_960_720.jpg);
+}
+
+.form{
+  margin-top:35%;
+  border: 1px solid #00aba9;
+  border-radius: 26px;
+  
+}
+
+.button{
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  background-color: lightblue;
+}
+
