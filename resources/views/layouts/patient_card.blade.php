@@ -1,12 +1,12 @@
 
-<div class="card">
+<div class="card shadow">
   <h5 class="card-header">{{$patient_data[0]->patient_name}}</h5>
   <div class="card-body">
     <h5 class="card-title">Мед карта</h5>
     <p class="card-text">Рег. номер : {{$patient_data[0]->reg_number}}</p>
     
 <div class="card border-dark">
-  <h5 class="card-header">{{$patient_data[0]->type}} cтраховка</h5>
+  <h5 class="card-header border-dark">{{$patient_data[0]->type}} cтраховка</h5>
   <div class="card-body">
 
 <div class = "row">

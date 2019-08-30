@@ -1,11 +1,27 @@
-<ul class="list-group">
-        @foreach($sales as $sale)
-        <div class="card mar_bottom">
-            <h5 class="card-header bg-primary text-white"></h5>
-            <div class="card-body">
-                <h5 class="card-text">{{$sale->patient_name}} | {{$sale->reg_number}} | {{$sale->date}} | {{$sale->type}} | {{$sale->ammount}} | {{$sale->d_name}}</h5>
-               
-            </div>
-        </div>
-        @endforeach
-    </ul>
+
+<table class="table table-bordered shadow">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Пациент</th>
+      <th scope="col">Рег. Номер</th>
+      <th scope="col">Дата</th>
+      <th scope="col">Препарат</th>
+      <th scope="col">Количество</th>
+      <th scope="col">Доктор</th>
+    </tr>
+  </thead>
+  <tbody>
+  	@foreach($sales as $sale)
+    <tr>
+      <th scope="row">{{$sale->id}}</th>
+      <td>{{$sale->patient_name}}</td>
+      <td>{{$sale->reg_number}}</td>
+      <td>{{$sale->date}}</td>
+      <td>{{$sale->type}}</td>
+      <td>{{$sale->ammount}}</td>
+      <td>{{$sale->d_name}}</td>
+    </tr>
+    @endforeach
+  </tbody>
+</table>

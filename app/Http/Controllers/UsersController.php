@@ -61,7 +61,7 @@ class UsersController extends Controller
         } 
     }
 
-    public function listOfWorkers(){
+    public function index(){
         $workers = DB::table('users')
                    ->join('roles','users.role_id','=','roles.id')
                    ->get();
@@ -70,5 +70,13 @@ class UsersController extends Controller
                    }
                   
         return view('pages.workers',compact('workers'));
+    }
+
+    public function new(){
+        $new = DB::table('users')
+      //->where('is_active',false)
+        ->select('d_name')
+        ->get();
+        return view('pages.new',compact('new'));
     }
 }

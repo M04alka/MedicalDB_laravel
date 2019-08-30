@@ -10,30 +10,42 @@ use Illuminate\Support\Facades\DB;
 class PillsController extends Controller
 {
     public function index(){
+    	$error = false;
     	$sales = DB::table('pills')
     	->join('types_of_pills', 'pills.type_of_pill_id', 'types_of_pills.id')
         ->join('users', 'pills.doctors_id', 'users.id')
         ->join('patients', 'pills.patient_id', 'patients.id')
-        ->select('patient_name','patients.reg_number','date', 'type','ammount','d_name')
+        ->select('pills.id','patient_name','patients.reg_number','date', 'type','ammount','d_name')
     	->get();
     	$pills = DB::table('types_of_pills')->get();
-    	return view('pages.pills',compact('sales','pills'));
+    	return view('pages.pills',compact('sales','pills','error'));
     }
 
     public function store(Request $request){
-    /*	if($request->input('count')>5){
-    		$error = "Запрещенно продовать больше 5 таблеток пациенту!"
+    	$insurance = DB::table('patients')
+            ->join('insurances', 'patients.id', '=', 'insurances.id')
+            ->join('types_of_insurance', 'types_of_insurance.id', '=', 'insurances.type_id')
+            ->value('is_active');
+    	if($request->input('count')>5){
+    		$error = "Запрещенно продовать больше 5 таблеток пациенту!";
     		return redirect('/pills')->with('error');
-    	}*/
-    	$doctor = $request->session()->get('d_name');
-    	$sale = new Pill();
-        $sale->patient_id = $this->getPatientsId($request->input('reg_number'));
-        $sale->date = Carbon::now();
-        $sale->type_of_pill_id = $request->input('type');
-        $sale->ammount = $request->input('count');
-        $sale->doctors_id = $this->getDoctorsId($doctor);
-        $sale->save();
-        return redirect('/pills');
+    	}
+    	elseif(!$insurance){
+    		$error = "Запрещенно продовать таблетки пациенту с неактивой страховкой!";
+    		return redirect('/pills')->with('error');
+    	}
+    	else{
+    		$error = false;
+    		$doctor = $request->session()->get('d_name');
+    		$sale = new Pill();
+        	$sale->patient_id = $this->getPatientsId($request->input('reg_number'));
+        	$sale->date = Carbon::now();
+        	$sale->type_of_pill_id = $request->input('type');
+        	$sale->ammount = $request->input('count');
+        	$sale->doctors_id = $this->getDoctorsId($doctor);
+        	$sale->save();
+        	return redirect('/pills')->with('error');;
+    	}
     }
 
     public function getPatientsId(String $reg_number){

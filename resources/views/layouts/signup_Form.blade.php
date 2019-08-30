@@ -2,7 +2,7 @@
 </div>
 
 <div class="col-6">
-<div class="card text-center mar_from_nav">
+<div class="card text-center mar_from_nav shadow">
   <h5 class="card-header">Зарегистрироваться</h5>
   <div class="card-body">
     <form method="post" action="\signin" >

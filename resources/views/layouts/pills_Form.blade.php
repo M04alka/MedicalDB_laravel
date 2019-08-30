@@ -1,4 +1,4 @@
-<div class="card text-center text-white bg-warning mb-3" style="max-width: 18rem;">
+<div class="card text-center text-white bg-warning mb-3 shadow" style="max-width: 18rem;">
 	<h5 class="card-header">Продать таблетки</h5>
 	<div class="card-body">
 		<form method="post" action="/pills/store">

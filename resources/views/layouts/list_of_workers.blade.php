@@ -13,7 +13,9 @@
             <h5 class="card-header bg-primary text-white">Сотрудник : {{$worker->d_name}}</h5>
             <div class="card-body">
                 <h5 class="card-text">Должность : {{$worker->role}}</h5>
-                
+                <form method="post">
+                    <button type="submit" name="delete" class="btn btn-info" >Уволить</button>
+                </form>                
             </div>
         </div>
         @elseif($worker->role == "Интерн врач" || $worker->role == "Интерн психолог")

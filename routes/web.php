@@ -17,7 +17,9 @@ Route::get('/login','UsersController@login');
 Route::get('/patients','PatientsController@patients');
 Route::get('/pills','PillsController@index');
 Route::get('/certificates','CertificateController@index');
-Route::get('/workers','UsersController@listOfWorkers');
+Route::get('/workers','UsersController@index');
+Route::get('/new','UsersController@new');
+
 
 //routes for signin
 Route::post('/signin','UsersController@store');

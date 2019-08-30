@@ -1,4 +1,4 @@
-<div class="card text-center text-white bg-primary mb-3" style="max-width: 18rem;">
+<div class="card text-center text-white bg-primary mb-3 shadow" style="max-width: 18rem;">
 	<h5 class="card-header">Добавить пациента</h5>
 	<div class="card-body">
 		<form method="post" action="/patients/store">
