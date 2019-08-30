@@ -8,7 +8,7 @@
 @section('content')
 <div class="row">
 	<div class="col-8">
-		
+		@include('layouts.list_of_pills')
 	</div>
 
 	<div class="col-4">

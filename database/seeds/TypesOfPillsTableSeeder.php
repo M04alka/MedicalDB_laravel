@@ -21,4 +21,4 @@ class TypesOfPillsTableSeeder extends Seeder
         );
 
         DB::table('types_of_pills')->insert($types);
-}
+}   }

@@ -34,7 +34,7 @@ Route::get('user/main','UsersController@main');
 Route::post('/patients/store','PatientsController@store');
 
 //pills routes
-Route::post('user/pills','UsersController@pills');
+Route::post('/pills/store','PillsController@store');
 
 //insurance routes
 Route::get('user/insurance','PatientsController@patients');
