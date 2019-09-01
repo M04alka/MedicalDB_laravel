@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class PatientsController extends Controller
 {
 
-    public function patients(Request $request){
+    public function index(Request $request){
         $patients_data = DB::table('patients')
             ->join('insurances', 'patients.id', '=', 'insurances.id')
             ->join('types_of_insurance', 'types_of_insurance.id', '=', 'insurances.type_id')
@@ -26,9 +26,16 @@ class PatientsController extends Controller
     }
 
     public function store(Request $request){
-    	$this->createNewUser($request);
-        $this->createNewInsurance($request);
-    	return redirect('/patients');
+        $patient = DB::table('patients')->where('reg_number',$request->input('reg_number'))->first();
+        if(!is_null($patient)){
+            return redirect('/patients');
+        }
+        else{
+            $this->createNewUser($request);
+            $this->createNewInsurance($request);
+            return redirect('/patients');
+        }
+    	
     }
 
     public function createNewUser(Request $request){
@@ -53,6 +60,7 @@ class PatientsController extends Controller
         $insurance = new Insurance();
         $insurance = Insurance::find($id);
         $insurance->type_id = $request->input('insurance_type');
+        $insurance->is_active = false;
         $insurance->active_from = Carbon::now();
         $insurance->active_to = Carbon::now()->addMonth();
         $insurance->save();
@@ -81,6 +89,16 @@ class PatientsController extends Controller
                 ->where('patient_id', $patient_data[0]->id)->get();
             
         return view('pages.patient',compact('patient_data','role','med_cert','psy_cert','name'));
+    }
+
+    public function income(Request $request){
+       
+        return view('pages.income');
+    }
+
+    public function incomeStore(Request $request){
+       
+        return redirect('/income');
     }
 }
 		

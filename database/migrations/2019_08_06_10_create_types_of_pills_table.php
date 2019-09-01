@@ -16,6 +16,8 @@ class CreateTypesOfPillsTable extends Migration
         Schema::create('types_of_pills', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type');
+            $table->string('about');
+            $table->integer('price');
         });
     }
 

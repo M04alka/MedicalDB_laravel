@@ -25,7 +25,7 @@ class CreatePsychologicalCertificatesTeble extends Migration
                 ->onDelete('cascade');
 
             $table->foreign('doctors_id')
-                ->references('id')->on('users')
+                ->references('id')->on('doctors')
                 ->onDelete('cascade');
         });
     }

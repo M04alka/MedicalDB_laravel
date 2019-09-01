@@ -12,12 +12,36 @@ class TypesOfPillsTableSeeder extends Seeder
     public function run()
     {
          $types = array(
-            array('type' => 'Обезболивающие'),
-            array('type' => 'Аспирин'),
-            array('type' => 'Аддерол'),
-            array('type' => 'Валиум'),
-            array('type' => 'Ксанакс'),
-            array('type' => 'Кетамин')
+            array(
+                'type' => 'Обезболивающие',
+                'price' => '60',
+                'about' => 'Продаеться без рецепта'
+            ),
+            array(
+                'type' => 'Аспирин',
+                'price' => '120',
+                'about' => 'Продаеться без рецепта'
+            ),
+            array(
+                'type' => 'Аддерол',
+                'price' => '150',
+                'about' => 'Продаеться только по рецепту!'
+            ),
+            array(
+                'type' => 'Валиум',
+                'price' => '300',
+                'about' => 'Продаеться только по рецепту!'
+            ),
+            array(
+                'type' => 'Ксанакс',
+                'price' => '400',
+                'about' => 'Продаеться только по рецепту!'
+            ),
+            array(
+                'type' => 'Кетамин',
+                'price' => '600',
+                'about' => 'Продаеться только по рецепту!'
+            )
         );
 
         DB::table('types_of_pills')->insert($types);

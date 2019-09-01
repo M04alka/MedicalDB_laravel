@@ -20,7 +20,7 @@ class CertificateController extends Controller
 
     public function store(Request $request){
 
-    	$doctor = $request->session()->get('d_name');
+    	$doctor = $request->session()->get('doctor_name');
     	$reg_number = $request->input('reg_number');
     	$doctor_id = $this->getDoctorsId($doctor);
     	$patietn_id = $this->getPatientsId($reg_number);
@@ -54,13 +54,13 @@ class CertificateController extends Controller
     }
 
     public function getDoctorsId(String $doctor){
-    	$doctor_id = DB::table('users')->where('d_name',$doctor)->value('id');
+    	$doctor_id = DB::table('doctors')->where('doctor_name',$doctor)->value('id');
     	return $doctor_id;
     }
 
     public function medCertifStore(Request $request){
         $role = $request->session()->get('role');
-        $doctor = $request->session()->get('d_name');
+        $doctor = $request->session()->get('doctor_name');
         $patient = $this->getPatientsName($request->input('reg_number'));
         $medicalCertificate = new MedicalCertificate();
         $medicalCertificate->patient_id = $this->getPatientsId($request->input('reg_number'));
@@ -75,7 +75,7 @@ class CertificateController extends Controller
 
     public function psychCertifStore(Request $request){
         $role = $request->session()->get('role');
-        $doctor = $request->session()->get('d_name');
+        $doctor = $request->session()->get('doctor_name');
         $patient = $this->getPatientsName($request->input('reg_number'));
         $psychologicalCertificate = new PsychologicalCertificate();
         $psychologicalCertificate->patient_id = $this->getPatientsId($request->input('reg_number'));

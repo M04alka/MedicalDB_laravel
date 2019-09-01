@@ -8,13 +8,11 @@
 @section('content')
 <div class="row">
 	<div class="col-8">
-		@include('layouts.pills.list_of_pills')
+		@include('layouts.income.list_of_income')
 	</div>
 
 	<div class="col-4">
-		@include('layouts.pills.pills_Form')
-
-		@include('messages.errors')
+		@include('layouts.income.income_Form')
 	</div>
 </div>
 @endsection

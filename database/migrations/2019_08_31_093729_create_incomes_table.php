@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMedicalCertificatesTeble extends Migration
+class CreateIncomesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,18 @@ class CreateMedicalCertificatesTeble extends Migration
      */
     public function up()
     {
-        Schema::create('medical_certificates', function (Blueprint $table) {
+        Schema::create('incomes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('patient_id');
+            $table->unsignedInteger('patient_id');
             $table->date('date');
-            $table->text('details');
-            $table->unsignedInteger('doctors_id');
+            $table->text('diagnosis');
+            $table->text('treatment');
+            $table->unsignedInteger('doctor_id');
 
             $table->foreign('patient_id')
                 ->references('id')->on('patients')
                 ->onDelete('cascade');
-
-            $table->foreign('doctors_id')
+            $table->foreign('doctor_id')
                 ->references('id')->on('doctors')
                 ->onDelete('cascade');
         });
@@ -37,6 +37,6 @@ class CreateMedicalCertificatesTeble extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('medical_certificates');
+        Schema::dropIfExists('incomes');
     }
 }

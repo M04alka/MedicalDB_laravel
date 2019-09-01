@@ -1,9 +1,7 @@
 @extends('master')
 
 @section('content')
-    
     <div class="row">
-    	@include('layouts.signup_Form')
-    	@include('messages.errors')
+    	@include('layouts.signin.signup_Form')
     <div/>
 @endsection

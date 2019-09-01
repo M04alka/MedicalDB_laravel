@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Controllers\HelpingFunctions;
 use App\Pill;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -13,9 +13,9 @@ class PillsController extends Controller
     	$error = false;
     	$sales = DB::table('pills')
     	->join('types_of_pills', 'pills.type_of_pill_id', 'types_of_pills.id')
-        ->join('users', 'pills.doctors_id', 'users.id')
+        ->join('doctors', 'pills.doctors_id', 'doctors.id')
         ->join('patients', 'pills.patient_id', 'patients.id')
-        ->select('pills.id','patient_name','patients.reg_number','date', 'type','ammount','d_name')
+        ->select('pills.id','patient_name','patients.reg_number','date', 'type','ammount','doctor_name')
     	->get();
     	$pills = DB::table('types_of_pills')->get();
     	return view('pages.pills',compact('sales','pills','error'));
@@ -36,13 +36,13 @@ class PillsController extends Controller
     	}
     	else{
     		$error = false;
-    		$doctor = $request->session()->get('d_name');
+    		$doctor = $request->session()->get('doctor_name');
     		$sale = new Pill();
-        	$sale->patient_id = $this->getPatientsId($request->input('reg_number'));
+        	$sale->patient_id = HelpingFunctions::getPatientsId($request->input('reg_number'));
         	$sale->date = Carbon::now();
         	$sale->type_of_pill_id = $request->input('type');
         	$sale->ammount = $request->input('count');
-        	$sale->doctors_id = $this->getDoctorsId($doctor);
+        	$sale->doctors_id = HelpingFunctions::getDoctorsId($doctor);
         	$sale->save();
         	return redirect('/pills')->with('error');;
     	}
@@ -54,7 +54,7 @@ class PillsController extends Controller
     }
 
     public function getDoctorsId(String $doctor){
-    	$doctor_id = DB::table('users')->where('d_name',$doctor)->value('id');
+    	$doctor_id = DB::table('doctors')->where('doctor_name',$doctor)->value('id');
     	return $doctor_id;
     }
 }

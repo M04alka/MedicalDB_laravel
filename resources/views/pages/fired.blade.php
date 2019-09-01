@@ -2,12 +2,12 @@
 
 @section('navbar')
 
-	@include('layouts.navbar.navbar')
+	@include('layouts.navbar')
 
 @endsection
 
 @section('content')
 
-	@include('layouts.patient.patient_card')
+	@include('layouts.fired')
 
 @endsection

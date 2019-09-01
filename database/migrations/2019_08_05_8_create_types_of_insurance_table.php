@@ -16,6 +16,8 @@ class CreateTypesOfInsuranceTable extends Migration
         Schema::create('types_of_insurance', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('type');
+            $table->string('about');
+            $table->integer('price');
         });
     }
 
