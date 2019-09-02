@@ -1,7 +1,7 @@
 
 <table class="table table-bordered shadow">
   <thead>
-    <tr>
+    <tr class = "bg-warning">
       <th scope="col">#</th>
       <th scope="col">Пациент</th>
       <th scope="col">Рег. Номер</th>
@@ -13,6 +13,17 @@
   </thead>
   <tbody>
   	@foreach($sales as $sale)
+    @if($sale->id%2==0)
+    <tr table-warning class = "pillscolor">
+      <th scope="row">{{$sale->id}}</th>
+      <td>{{$sale->patient_name}}</td>
+      <td>{{$sale->reg_number}}</td>
+      <td>{{$sale->date}}</td>
+      <td>{{$sale->type}}</td>
+      <td>{{$sale->ammount}}</td>
+      <td>{{$sale->doctor_name}}</td>
+    </tr>
+    @else
     <tr table-warning>
       <th scope="row">{{$sale->id}}</th>
       <td>{{$sale->patient_name}}</td>
@@ -22,6 +33,7 @@
       <td>{{$sale->ammount}}</td>
       <td>{{$sale->doctor_name}}</td>
     </tr>
+    @endif
     @endforeach
   </tbody>
 </table>

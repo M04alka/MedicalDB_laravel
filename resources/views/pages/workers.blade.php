@@ -2,12 +2,12 @@
 
 @section('navbar')
 
-	@include('layouts.navbar')
+	@include('layouts.navbar.navbar')
 
 @endsection
 
 @section('content')
 
-	@include('layouts.list_of_workers')
+	@include('layouts.workers.list_of_workers')
 
 @endsection

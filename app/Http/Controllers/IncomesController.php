@@ -9,16 +9,19 @@ use App\Http\Controllers\HelpingFunctions;
 
 class IncomesController extends Controller
 {
-   public function index(){
+   //get income page
+   public function index(Request $request){
+      $role = $request->session()->get('role');
    		$incomes=DB::table('incomes')
         ->join('doctors', 'incomes.doctor_id', 'doctors.id')
         ->join('patients', 'incomes.patient_id', 'patients.id')
         ->select('incomes.id','patient_name','patients.reg_number','diagnosis','treatment','date','doctor_name')
    		->get();
-   		return view('pages.income',compact('incomes'));
+   		return view('pages.income',compact('incomes','role'));
    }
 
-   public function addNewIncome(Request $request){
+   //store new incomer
+   public function store(Request $request){
    		$doctor = $request->session()->get('doctor_name');
    		$income = new Income();
    		$income->patient_id = HelpingFunctions::getPatientsId($request->input('reg_number'));

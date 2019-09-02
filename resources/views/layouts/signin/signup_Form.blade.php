@@ -9,7 +9,7 @@
           {{ csrf_field() }}
           <div class="form-group">
             <label for="exampleInputEmail1">Имя Фамилия</label>
-            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Имя Фамилия" name="d_name">
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Имя Фамилия" name="doctor_name">
           </div>
           <div class="form-group">
             <label for="exampleInputEmail1">Рег. номер</label>

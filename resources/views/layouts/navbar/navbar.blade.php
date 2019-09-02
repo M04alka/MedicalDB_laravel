@@ -16,6 +16,7 @@
       <li class="nav-item">
         <a class="nav-link" href="/income">Поступление</a>
       </li>
+      @if($role=="Глав. Врач")
       <li class="nav-item">
         <a class="nav-link" href="/workers">Сотрудники</a>
       </li>
@@ -25,6 +26,7 @@
       <li class="nav-item">
         <a class="nav-link" href="/fired">Уволеные</a>
       </li>
+      @endif
   </ul>
   <form class="form-inline">
     <input class="form-control mr-sm-2" type="search" placeholder="Рег. номер" aria-label="Search">

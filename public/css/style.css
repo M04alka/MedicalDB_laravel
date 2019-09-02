@@ -48,3 +48,17 @@ box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.75);
 .mar{
   margin:1%;
 }
+
+.pillscolor{
+  background-color: #ffe6cc;
+}
+
+.incomescolor{
+  background-color: #f2c0c0;
+}
+.border{
+  border-color: black;
+}
+.incomeheadscolor{
+  background-color: #d96868;
+}

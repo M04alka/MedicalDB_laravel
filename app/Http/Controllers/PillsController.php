@@ -1,16 +1,20 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Http\Controllers\HelpingFunctions;
+
 use App\Pill;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\HelpingFunctions;
 
 class PillsController extends Controller
 {
-    public function index(){
+
+    //get pills page
+    public function index(Request $request){
     	$error = false;
+        $role = $request->session()->get('role');
     	$sales = DB::table('pills')
     	->join('types_of_pills', 'pills.type_of_pill_id', 'types_of_pills.id')
         ->join('doctors', 'pills.doctors_id', 'doctors.id')
@@ -18,9 +22,10 @@ class PillsController extends Controller
         ->select('pills.id','patient_name','patients.reg_number','date', 'type','ammount','doctor_name')
     	->get();
     	$pills = DB::table('types_of_pills')->get();
-    	return view('pages.pills',compact('sales','pills','error'));
+    	return view('pages.pills',compact('sales','pills','error','role'));
     }
 
+    //store sales o pills
     public function store(Request $request){
     	$insurance = DB::table('patients')
             ->join('insurances', 'patients.id', '=', 'insurances.id')
@@ -46,15 +51,5 @@ class PillsController extends Controller
         	$sale->save();
         	return redirect('/pills')->with('error');;
     	}
-    }
-
-    public function getPatientsId(String $reg_number){
-    	$patietn_id = Db::table('patients')->where('reg_number',$reg_number)->value('id');
-    	return $patietn_id;
-    }
-
-    public function getDoctorsId(String $doctor){
-    	$doctor_id = DB::table('doctors')->where('doctor_name',$doctor)->value('id');
-    	return $doctor_id;
     }
 }

@@ -6,25 +6,29 @@ namespace App\Http\Controllers;
 use App\Patient;
 use App\Insurance;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
 
 class PatientsController extends Controller
 {
-
+    //get patient page
     public function index(Request $request){
+        $role = $request->session()->get('role');
         $patients_data = DB::table('patients')
             ->join('insurances', 'patients.id', '=', 'insurances.id')
             ->join('types_of_insurance', 'types_of_insurance.id', '=', 'insurances.type_id')
             ->get();
         $insurances = DB::table('types_of_insurance')->get();
+        //date of preferential insurance begin
         $dates = array();
         for($i = 0; $i<=6; $i++){
             $dates[] = Carbon::now()->subDays($i);
         }
-        return view('pages.patients',compact('patients_data','insurances','dates'));
+        return view('pages.patients',compact('patients_data','insurances','dates','role'));
     }
 
+    //store new patient 
     public function store(Request $request){
         $patient = DB::table('patients')->where('reg_number',$request->input('reg_number'))->first();
         if(!is_null($patient)){
@@ -38,6 +42,7 @@ class PatientsController extends Controller
     	
     }
 
+    //create new patient 
     public function createNewUser(Request $request){
         $patient = new Patient();
         $patient->patient_name = $request->input('patient_name');
@@ -45,6 +50,7 @@ class PatientsController extends Controller
         $patient->save();
     }
 
+    //create insurance for patient 
     public function createNewInsurance(Request $request){
         $start = new Carbon($request->input('begin_date')); 
         $insurance = new Insurance();
@@ -55,6 +61,7 @@ class PatientsController extends Controller
         $insurance->save();
     }
 
+    //update insurance
     public function update(Request $request){
         $id = Patient::where('reg_number', $request->input('reg_number'))->value('id');
         $insurance = new Insurance();
@@ -65,40 +72,6 @@ class PatientsController extends Controller
         $insurance->active_to = Carbon::now()->addMonth();
         $insurance->save();
         return redirect('/patients');
-    }
-
-    public function show(Request $request, $patient){
-        $role = $request->session()->get('role');
-        $name = $request->session()->get('d_name');
-        $patient_data = DB::table('patients')->where('patient_name',$patient)
-            ->join('insurances', 'patients.id', 'insurances.id')
-            ->join('types_of_insurance', 'insurances.type_id', 'types_of_insurance.id')
-            ->select('patients.id','patient_name','reg_number','type','medical_certificate_id','psychological_certificate_id')
-            ->get();
-          
-            if(is_null($patient_data[0]->medical_certificate_id)){
-                $med_cert = false;
-            }
-            else $med_cert = DB::table('medical_certificates')
-                ->where('patient_id', $patient_data[0]->id)->get();
-
-            if(is_null($patient_data[0]->psychological_certificate_id)){
-                $psy_cert = false;
-            }
-            else $psy_cert = DB::table('psychological_certificates')
-                ->where('patient_id', $patient_data[0]->id)->get();
-            
-        return view('pages.patient',compact('patient_data','role','med_cert','psy_cert','name'));
-    }
-
-    public function income(Request $request){
-       
-        return view('pages.income');
-    }
-
-    public function incomeStore(Request $request){
-       
-        return redirect('/income');
     }
 }
 		
