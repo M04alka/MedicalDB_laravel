@@ -4,16 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Pill;
 use Carbon\Carbon;
+use App\Rules\PillsCount;
 use Illuminate\Http\Request;
+use App\Rules\IfInsuranceExistRule;
 use Illuminate\Support\Facades\DB;
+use App\Rules\IsInsuranceActiveRule;
 use App\Http\Controllers\HelpingFunctions;
 
 class PillsController extends Controller
 {
-
     //get pills page
     public function index(Request $request){
-    	$error = false;
+        if($request->session()->has('doctor_name')){
+            $url = "pills";
         $role = $request->session()->get('role');
     	$sales = DB::table('pills')
     	->join('types_of_pills', 'pills.type_of_pill_id', 'types_of_pills.id')
@@ -22,34 +25,28 @@ class PillsController extends Controller
         ->select('pills.id','patient_name','patients.reg_number','date', 'type','ammount','doctor_name')
     	->get();
     	$pills = DB::table('types_of_pills')->get();
-    	return view('pages.pills',compact('sales','pills','error','role'));
+    	return view('pages.pills',compact('sales','pills','role','url'));
+    }
+    else{
+       return redirect('/login');
+      }
     }
 
-    //store sales o pills
+    //store sales of pills
     public function store(Request $request){
-    	$insurance = DB::table('patients')
-            ->join('insurances', 'patients.id', '=', 'insurances.id')
-            ->join('types_of_insurance', 'types_of_insurance.id', '=', 'insurances.type_id')
-            ->value('is_active');
-    	if($request->input('count')>5){
-    		$error = "Запрещенно продовать больше 5 таблеток пациенту!";
-    		return redirect('/pills')->with('error');
-    	}
-    	elseif(!$insurance){
-    		$error = "Запрещенно продовать таблетки пациенту с неактивой страховкой!";
-    		return redirect('/pills')->with('error');
-    	}
-    	else{
-    		$error = false;
-    		$doctor = $request->session()->get('doctor_name');
-    		$sale = new Pill();
-        	$sale->patient_id = HelpingFunctions::getPatientsId($request->input('reg_number'));
-        	$sale->date = Carbon::now();
-        	$sale->type_of_pill_id = $request->input('type');
-        	$sale->ammount = $request->input('count');
-        	$sale->doctors_id = HelpingFunctions::getDoctorsId($doctor);
-        	$sale->save();
-        	return redirect('/pills')->with('error');;
-    	}
-    }
+        $request->validate([
+            'reg_number'=>['required', new IfInsuranceExistRule, new IsInsuranceActiveRule],
+            'count'=>['required', new PillsCount],
+            'type'=>'required',
+        ]);
+    	$doctor = $request->session()->get('doctor_name');
+    	$sale = new Pill();
+        $sale->patient_id = HelpingFunctions::getPatientsId($request->input('reg_number'));
+        $sale->date = Carbon::now();
+        $sale->type_of_pill_id = $request->input('type');
+        $sale->ammount = $request->input('count');
+        $sale->doctors_id = HelpingFunctions::getDoctorsId($doctor);
+        $sale->save();
+        return redirect('/pills');
+    }  
 }

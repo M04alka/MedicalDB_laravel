@@ -7,6 +7,8 @@ use App\Patient;
 use App\Insurance;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Rules\PatientExistRule;
+use App\Rules\IfInsuranceExistRule;
 use Illuminate\Support\Facades\DB;
 
 
@@ -14,6 +16,8 @@ class PatientsController extends Controller
 {
     //get patient page
     public function index(Request $request){
+        if($request->session()->has('doctor_name')){
+            $url = "patients";
         $role = $request->session()->get('role');
         $patients_data = DB::table('patients')
             ->join('insurances', 'patients.id', '=', 'insurances.id')
@@ -25,25 +29,26 @@ class PatientsController extends Controller
         for($i = 0; $i<=6; $i++){
             $dates[] = Carbon::now()->subDays($i);
         }
-        return view('pages.patients',compact('patients_data','insurances','dates','role'));
+        return view('pages.patients',compact('patients_data','insurances','dates','role','url'));}
+         else{
+       return redirect('/login');
+      }
     }
 
     //store new patient 
     public function store(Request $request){
-        $patient = DB::table('patients')->where('reg_number',$request->input('reg_number'))->first();
-        if(!is_null($patient)){
-            return redirect('/patients');
-        }
-        else{
-            $this->createNewUser($request);
-            $this->createNewInsurance($request);
-            return redirect('/patients');
-        }
-    	
+        $request->validate([
+            'patient_name'=>'required',
+            'reg_number'=>['required', new PatientExistRule],
+            'begin_date'=>'required',
+        ]);  
+        $this->createNewPatient($request);
+        $this->createNewInsurance($request);
+        return redirect('/patients');
     }
 
     //create new patient 
-    public function createNewUser(Request $request){
+    public function createNewPatient(Request $request){
         $patient = new Patient();
         $patient->patient_name = $request->input('patient_name');
         $patient->reg_number =  $request->input('reg_number');
@@ -63,6 +68,10 @@ class PatientsController extends Controller
 
     //update insurance
     public function update(Request $request){
+        $request->validate([
+            'reg_number'=>['required', new IfInsuranceExistRule],
+            'insurance_type'=>'required',
+        ]);  
         $id = Patient::where('reg_number', $request->input('reg_number'))->value('id');
         $insurance = new Insurance();
         $insurance = Insurance::find($id);

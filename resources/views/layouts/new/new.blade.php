@@ -4,13 +4,20 @@
         <h5 class="card-header bg-light text-darck">{{$ne->doctor_name}}</h5>
         <div class="card-body">
         <h5 class="card-text"></h5>
-         	<form method="POST" action="/new/decide">
-                 {{ csrf_field() }}
+        <div class="row">
+         	<form method="POST" action="/new/update">
+                {{ csrf_field() }}
                 <input type="hidden" name="_method" value="PUT">
                 <input type="hidden" name="reg_number" value="{{$ne->reg_number}}">
-                <input type="submit" name="delete" value="delete" class="btn btn-danger">Удалить
-                <input type="submit" name="hire" value="hire" class="btn btn-success">Нанять
-            </form>                
+                <input type="submit" name="accept" value="Принять" class="btn btn-success">
+            </form>     
+            <form method="POST" action="/new/delete">
+                {{ csrf_field() }}
+                <input type="hidden" name="_method" value="DELETE">
+                <input type="hidden" name="reg_number" value="{{$ne->reg_number}}">
+                <input type="submit" name="delete" value="Удалить" class="btn btn-danger">
+            </form> 
+        </div>      
        	</div>
     </div>	
 @endforeach

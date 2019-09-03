@@ -10,7 +10,7 @@
 </head>
 <body class="back">
 
-<div class="container">
+<div class="container-fluid">
 	@yield('navbar')
     @yield('content')
 </div>

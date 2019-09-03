@@ -4,19 +4,90 @@
     <img src="/pictures/med_logo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
     Медицинский центр
   </a>
-
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
   <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
+    @switch($url)
+    @case('patients')
+        <li class="nav-item active font-weight-bold">
         <a class="nav-link" href="/patients">Пациенты </a>
-      </li>
-      <li class="nav-item">
+        </li>
+        <li class="nav-item">
         <a class="nav-link" href="/pills">Таблетки</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/incomes">Поступление</a>
+        </li>
+        @break
+    @case('pills')
+        <li class="nav-item ">
+        <a class="nav-link" href="/patients">Пациенты </a>
+        </li>
+        <li class="nav-item active font-weight-bold">
+        <a class="nav-link" href="/pills">Таблетки</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/incomes">Поступление</a>
+        </li>
+        @break
+    @case('incomes')
+        <li class="nav-item">
+        <a class="nav-link" href="/patients">Пациенты </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/pills">Таблетки</a>
+        </li>
+        <li class="nav-item active font-weight-bold">
+        <a class="nav-link" href="/incomes">Поступление</a>
+        </li>
+        @break
+    @default
+        <li class="nav-item">
+        <a class="nav-link" href="/patients">Пациенты </a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/pills">Таблетки</a>
+        </li>
+        <li class="nav-item">
+        <a class="nav-link" href="/incomes">Поступление</a>
+        </li>
+        @break
+    @endswitch
+      @if($role=="Глав. Врач")
+    @switch($url)
+    @case('workers')
+     <li class="nav-item active font-weight-bold">
+        <a class="nav-link" href="/workers">Сотрудники</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/income">Поступление</a>
+        <a class="nav-link" href="/new">Новые сотрудники</a>
       </li>
-      @if($role=="Глав. Врач")
+      <li class="nav-item">
+        <a class="nav-link" href="/fired">Уволеные</a>
+      </li>
+      @break
+    @case('new')
+     <li class="nav-item">
+        <a class="nav-link" href="/workers">Сотрудники</a>
+      </li>
+      <li class="nav-item active font-weight-bold">
+        <a class="nav-link" href="/new">Новые сотрудники</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/fired">Уволеные</a>
+      </li>
+      @break
+    @case('fired')
+     <li class="nav-item">
+        <a class="nav-link" href="/workers">Сотрудники</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/new">Новые сотрудники</a>
+      </li>
+      <li class="nav-item active font-weight-bold">
+        <a class="nav-link" href="/fired">Уволеные</a>
+      </li>
+      @break
+    @default
       <li class="nav-item">
         <a class="nav-link" href="/workers">Сотрудники</a>
       </li>
@@ -26,6 +97,8 @@
       <li class="nav-item">
         <a class="nav-link" href="/fired">Уволеные</a>
       </li>
+      @break
+       @endswitch
       @endif
   </ul>
   <form class="form-inline">

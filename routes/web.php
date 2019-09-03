@@ -12,10 +12,13 @@
 */
 
 Route::get('/certificates','CertificateController@index');
-//insurance routes
 Route::get('user/insurance','PatientsController@patients');
 Route::post('/certificate/store','CertificateController@store');
 Route::get('/fire/{reg_number}','DoctorsController@fire');
+
+
+
+
 
 //==LOGIN ROUTES==//
 
@@ -62,9 +65,9 @@ Route::post('/insurance/update','PatientsController@update');
 //--patient page--//
 Route::get('/patients/{patient}','PatientController@index');
 //--store med certificate--//
-Route::post('/medcertificate/store','CertificateController@medCertifStore');
+Route::post('/medcertificate/store','PatientController@medCertifStore');
 //--store psy certificate--//
-Route::post('/pscertificate/store','CertificateController@psychCertifStore');
+Route::post('/pscertificate/store','PatientController@psychCertifStore');
 
 //==================//
 
@@ -82,7 +85,7 @@ Route::post('/pills/store','PillsController@store');
 //==INCOMES ROUTES==//
 
 //--income page--//
-Route::get('/income','IncomesController@index');
+Route::get('/incomes','IncomesController@index');
 //--add new income--//
 Route::post('/income/store','IncomesController@store');
 
@@ -93,6 +96,8 @@ Route::post('/income/store','IncomesController@store');
 
 //--workers page--//
 Route::get('/workers','WorkersController@index');
+//--update worker--//
+Route::put('/worker/update','WorkersController@update');
 
 //==================//
 
@@ -100,9 +105,11 @@ Route::get('/workers','WorkersController@index');
 //==NEW USERS ROUTES==//
 
 //--new users page--//
-Route::get('/new','NewWorkers@index');
-//--hire or delete new doctor--//
-Route::put('/new/decide','NewWorkers@update');
+Route::get('/new','NewWorkersController@index');
+//--hire new doctor--//
+Route::put('/new/update','NewWorkersController@update');
+//--delete user--//
+Route::delete('/new/delete','NewWorkersController@delete');
 
 //==================//
 
@@ -112,7 +119,7 @@ Route::put('/new/decide','NewWorkers@update');
 //--fired doctors page--//
 Route::get('/fired','FiredController@index');
 //--restore fired doctor--//
-Route::put('/restore/{reg_number}','DoctorsController@restore');
+Route::put('/restore','FiredController@update');
 
 //==================//
 

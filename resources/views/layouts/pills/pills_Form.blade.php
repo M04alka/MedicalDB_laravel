@@ -13,7 +13,13 @@
 				<select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="type">
 					<option selected>Тип таблеток</option>
 					@foreach($pills as $pill)
+					@if($role=="Психолог")
 					<option value="{{$pill->id}}">{{$pill->type}}</option>
+					@else
+						@if($pill->type == "Обезболивающие" || $pill->type == "Аспирин")
+						<option value="{{$pill->id}}">{{$pill->type}}</option>
+						@endif
+					@endif
 					@endforeach
 				</select>
 			</div>

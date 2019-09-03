@@ -13,7 +13,6 @@
 
 	<div class="col-4">
 		@include('layouts.pills.pills_Form')
-
 		@include('messages.errors')
 	</div>
 </div>

@@ -13,6 +13,7 @@
   </div>
 
   <div class="col-6 col-md-4">
+  	@include('messages.errors')
     @include('layouts.patients.addNewPatient_Form')
     @include('layouts.patients.extendInsurance_Form')
   </div>

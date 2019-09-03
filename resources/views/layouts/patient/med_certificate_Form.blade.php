@@ -4,7 +4,7 @@
 		<form method="post" action="/medcertificate/store">
 			{{ csrf_field() }}
 			<div class="form-group">
-				<input type="text" class="form-control" id="inputPassword4" placeholder="Рег. номер" name="reg_number">
+				<input type="hidden" class="form-control" id="inputPassword4" placeholder="Рег. номер" name="reg_number" value="{{$patient_data->reg_number}}" readonly>
 			</div>
 			<div class="form-group">
 				<textarea class="form-control" id="exampleFormControlTextarea1" rows="4" name="details"></textarea>

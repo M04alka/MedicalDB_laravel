@@ -9,17 +9,25 @@ class WorkersController extends Controller
 {
     //list of medical workers
     public function index(Request $request){
+        $url = "workers";
         $role = $request->session()->get('role');
         $workers = DB::table('doctors')->where('is_fired',false)->where('is_active',true)
                    ->join('roles','doctors.role_id','=','roles.id')
                    ->get();
         $roles = DB::table('roles')->get();
-        return view('pages.workers',compact('workers','role','roles'));
+        return view('pages.workers',compact('workers','role','roles','url'));
     }
 
     //fire worker
-    public function fire($reg_number){
-        $fire = DB::table('doctors')->where('reg_number',$reg_number)->update(['is_fired' => true]);
-        return redirect('/workers');
+    public function update(Request $request){
+        if($request->input('assigne')){
+            $assigne = DB::table('doctors')->where('reg_number',$request->input('reg_number'))->update(['role_id' => $request->input('role')]);
+            return redirect('/workers');
+        }
+        elseif($request->input('fire')){
+            $fire = DB::table('doctors')->where('reg_number',$request->input('reg_number'))->update(['is_fired' => true]);
+            return redirect('/workers');
+        }
+        
     }
 }

@@ -9,21 +9,23 @@ class NewWorkersController extends Controller
 {
     //list of new users
     public function index(Request $request){
+        $url = "new";
         $role = $request->session()->get('role');
         $new = DB::table('doctors')->where('is_active',false)->select('doctor_name','reg_number')->get();
-        return view('pages.new',compact('new','role'));
+        $roles = DB::table('roles')->get();
+        return view('pages.new',compact('new','role','roles','url'));
     }
 
-    //hire new worker
+    //hire new user
     public function update(Request $request){
-        if($request->input('delete')){
-            $delete = DB::table('doctors')->where('reg_number',$request->input('reg_number'))->delete();
-            return redirect('/new');
-        }
-        elseif($request->input('hire')) {
-            $take = DB::table('doctors')->where('reg_number',$request->input('reg_number'))->update(['is_active' => true]);
-            return redirect('/new');
-        }
+       $take = DB::table('doctors')->where('reg_number',$request->input('reg_number'))->update(['is_active' => true]);
+       return redirect('/new');
+    }
         
+    
+    //delete user
+    public function delete(Request $request){
+            $delete = DB::table('doctors')->where('reg_number',$request->input('reg_number'))->delete();
+            return redirect('/new');  
     }
 }

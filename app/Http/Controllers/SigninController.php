@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Doctor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -12,25 +13,20 @@ class SigninController extends Controller
         return view('pages.signinpage',compact('error'));
     }
 
-    //authentication
-    public function store(Request $request){  
-        $doctor = DB::table('doctors')
-        ->where('doctor_name',$request->input('doctor_name'))
-        ->where('password',$request->input('password'))
-        ->join('roles','doctors.role_id','roles.id')
-        ->first();
-
-        if(is_null($doctor)){
+    //registration
+    public function store(Request $request){
+        $this->validate($request,['doctor_name'=>'required','password'=>'required','reg_number'=>'required|max:5']);  
+        $user = DB::table('doctors')->where('reg_number',$request->input('reg_number'))->first();
+        if(is_null($user)){
+            $doctor = new Doctor();
+            $doctor->doctor_name = $request->input('doctor_name');
+            $doctor->password = $request->input('password');
+            $doctor->reg_number = $request->input('reg_number');
+            $doctor->save();
             return redirect('/login');
         }
-        elseif(!is_null($doctor) && $doctor->is_active!=true){ 
-            return redirect('/login');
+        else {
+            return redirect('/signin');
         }
-        else{ 
-
-            $request->session()->put('role',$doctor->role);
-            $request->session()->put('doctor_name',$doctor->doctor_name);
-            return redirect('/main');
-        } 
     }
 }
