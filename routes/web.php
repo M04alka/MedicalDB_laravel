@@ -10,16 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/certificates','CertificateController@index');
-Route::get('user/insurance','PatientsController@patients');
-Route::post('/certificate/store','CertificateController@store');
-Route::get('/fire/{reg_number}','DoctorsController@fire');
-
-
-
-
-
 //==LOGIN ROUTES==//
 
 //--login page--//

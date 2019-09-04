@@ -10,10 +10,10 @@
 </head>
 <body class="back">
 
-<div class="container">
-	@yield('navbar')
-    @yield('content')
-</div>
+	<div class="container">
+		@yield('navbar')
+    	@yield('content')
+	</div>
 
 </body>
 </html>

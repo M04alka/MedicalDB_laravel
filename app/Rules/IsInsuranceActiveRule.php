@@ -33,7 +33,6 @@ class IsInsuranceActiveRule implements Rule
             $isActive = DB::table('insurances')->where('id', $id)->value('is_active');
             return $isActive;
         }
-         
     }
 
     /**

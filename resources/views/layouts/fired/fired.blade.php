@@ -5,12 +5,11 @@
         	<div class="card-body">
         		<h5 class="card-text"></h5>            
         		<form method="POST" action="/restore">
-                {{ csrf_field() }}
-                <input type="hidden" name="_method" value="PUT">
-                <input type="hidden" name="reg_number" value="{{$person->reg_number}}">
-                <input type="submit" name="restore" value="Востановить" class="btn btn-danger">
-               
-            </form>
+                    {{ csrf_field() }}
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="hidden" name="reg_number" value="{{$person->reg_number}}">
+                    <input type="submit" name="restore" value="Востановить" class="btn btn-danger">
+                </form>
        		</div>
     	</div>	
 	@endforeach
