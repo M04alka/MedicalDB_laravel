@@ -14,6 +14,7 @@ class PatientController extends Controller
     public function index(Request $request, $patient){
         $role = $request->session()->get('role');
         $name = $request->session()->get('doctor_name');
+        $url = "patient";
         $patient_data = DB::table('patients')->where('patient_name',$patient)
             ->join('insurances', 'patients.id', 'insurances.id')
             ->join('types_of_insurance', 'insurances.type_id', 'types_of_insurance.id')
@@ -32,7 +33,7 @@ class PatientController extends Controller
             else $psy_cert = DB::table('psychological_certificates')
                 ->where('patient_id', $patient_data->id)->get();
             
-        return view('pages.patient',compact('patient_data','role','med_cert','psy_cert','name'));
+        return view('pages.patient',compact('patient_data','role','med_cert','psy_cert','name','url'));
     }
 
     //store med certificate for users insurance

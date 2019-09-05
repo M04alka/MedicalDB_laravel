@@ -17,7 +17,7 @@ class PatientsController extends Controller
     //get patient page
     public function index(Request $request){
         if($request->session()->has('doctor_name')){
-            $url = "patients";
+        $url = "patients";
         $role = $request->session()->get('role');
         $patients_data = DB::table('patients')
             ->join('insurances', 'patients.id', '=', 'insurances.id')

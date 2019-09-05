@@ -4,7 +4,7 @@
   	<div class="card-body text-success">
     	<div class="row">
 			@foreach($insurances as $insurance)
-				if($insurance->type=="Медицинская" || $insurance->type=="Полицейская" || $insurance->type=="Льготная")
+				@if($insurance->type=="Медицинская" || $insurance->type=="Полицейская" || $insurance->type=="Льготная")
 
 				@elseif($insurance->type!="Медицинская" || $insurance->type!="Полицейская" || $insurance->type!="Льготная")
 					<div class="card border-success mb-3 shadow mar" style="max-width: 18rem;">
