@@ -4,8 +4,8 @@
     <tr class = "bg-warning">
       <th scope="col">#</th>
       <th scope="col">Пациент</th>
-      <th scope="col">Рег. Номер</th>
-      <th scope="col">Дата</th>
+      <th scope="col">Номер паспорта</th>
+      <th scope="col">Дата продажи</th>
       <th scope="col">Препарат</th>
       <th scope="col">Количество</th>
       <th scope="col">Доктор</th>

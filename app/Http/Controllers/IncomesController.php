@@ -14,7 +14,7 @@ class IncomesController extends Controller
 {
    //get income page
    public function index(Request $request){
-      if($request->session()->has('doctor_name')){
+      if(HelpingFunctions::checkSession($request)){
         $url = "incomes";
         $role = $request->session()->get('role');
         $incomes=DB::table('incomes')

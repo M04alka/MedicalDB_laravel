@@ -17,6 +17,7 @@ class CreatePatientsTable extends Migration
             $table->bigIncrements('id');
             $table->string('patient_name');
             $table->string('reg_number');
+            $table->boolean('is_dead');
         });
     }
 

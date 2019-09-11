@@ -7,7 +7,7 @@
                
                <form method="POST" action="/worker/update">
                 {{ csrf_field() }}
-                <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="role">
+                <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref" name="role" value="0">
                     <option selected>Должности</option>
                     @foreach($roles as $role)
                     @if($worker->role==$role->role || $role->role== "Новый сотрудник" )

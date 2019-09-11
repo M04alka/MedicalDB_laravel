@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\MedicalCertificate;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -21,17 +22,17 @@ class PatientController extends Controller
             ->select('patients.id','patient_name','reg_number','type','medical_certificate_id','psychological_certificate_id')
             ->first();
           
-            if(is_null($patient_data->medical_certificate_id)){
-                $med_cert = false;
-            }
-            else $med_cert = DB::table('medical_certificates')
-                ->where('patient_id', $patient_data->id)->get();
+        if(is_null($patient_data->medical_certificate_id)){
+            $med_cert = false;
+        }
+        else $med_cert = DB::table('medical_certificates')
+            ->where('patient_id', $patient_data->id)->get();
 
-            if(is_null($patient_data->psychological_certificate_id)){
-                $psy_cert = false;
-            }
-            else $psy_cert = DB::table('psychological_certificates')
-                ->where('patient_id', $patient_data->id)->get();
+        if(is_null($patient_data->psychological_certificate_id)){
+            $psy_cert = false;
+        }
+        else $psy_cert = DB::table('psychological_certificates')
+            ->where('patient_id', $patient_data->id)->get();
             
         return view('pages.patient',compact('patient_data','role','med_cert','psy_cert','name','url'));
     }
@@ -72,13 +73,13 @@ class PatientController extends Controller
     }
 
     //update insurance field medical_certificate_id
-    public function updateMedInsurance($id){
+    private function updateMedInsurance($id){
         $medId = DB::table('medical_certificates')->where('patient_id',$id)->value('id');
         DB::table('insurances')->where('id',$id)->update(['medical_certificate_id' => $medId ]);
     }
 
     //update insurance field psychological_certificate_id
-    public function updatePsyInsurance($id){
+    private function updatePsyInsurance($id){
         $psyId = DB::table('psychological_certificates')->where('patient_id',$id)->value('id');
         DB::table('insurances')->where('id',$id)->update(['psychological_certificate_id' => $psyId]);
     }

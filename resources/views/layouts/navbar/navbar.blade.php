@@ -1,4 +1,4 @@
-<div class="mar_from_nav ">
+<div class="mar_from_nav">
   <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light nav_shadow">
     <a class="navbar-brand" href="/main">
       <img src="/pictures/med_logo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -101,10 +101,11 @@
           @endswitch
         @endif
       </ul>
-      <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Рег. номер" aria-label="Search">
+      <form class="form-inline" method= "GET" action="/find">
+        <input class="form-control mr-sm-2" type="search" placeholder="Рег. номер" aria-label="Search" name = "reg_number">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
       </form>
+      <a href="/login" class="btn btn-primary">Выйти</a>
     </div>
   </nav>
 </div>

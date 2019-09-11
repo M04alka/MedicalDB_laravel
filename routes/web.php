@@ -113,3 +113,9 @@ Route::put('/restore','FiredController@update');
 
 //==================//
 
+//==NAVBAR ROUTES==//
+
+//--fired doctors page--//
+Route::get('/find','NavbarController@find');
+
+//==================//

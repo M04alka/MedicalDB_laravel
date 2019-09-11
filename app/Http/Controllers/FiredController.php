@@ -4,15 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\HelpingFunctions;
 
 class FiredController extends Controller
 {
     //list of fired workers
     public function index(Request $request){
-        $url = "fired";
-        $role = $request->session()->get('role');
-        $fired = DB::table('doctors')->where('is_fired',true)->select('doctor_name','reg_number')->get();
-        return view('pages.fired',compact('fired','role','url'));
+        if(HelpingFunctions::checkSession($request)){
+            $url = "fired";
+            $role = $request->session()->get('role');
+            $fired = DB::table('doctors')->where('is_fired',true)->select('doctor_name','reg_number')->get();
+            return view('pages.fired',compact('fired','role','url'));
+        }
+        else return redirect('/login');
     }
 
     //restore fired worker

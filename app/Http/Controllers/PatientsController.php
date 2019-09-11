@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Patient;
 use App\Insurance;
 use Carbon\Carbon;
@@ -10,30 +9,32 @@ use Illuminate\Http\Request;
 use App\Rules\PatientExistRule;
 use App\Rules\IfInsuranceExistRule;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Controllers\HelpingFunctions;
 
 class PatientsController extends Controller
 {
     //get patient page
     public function index(Request $request){
-        if($request->session()->has('doctor_name')){
-        $url = "patients";
-        $role = $request->session()->get('role');
-        $patients_data = DB::table('patients')
-            ->join('insurances', 'patients.id', '=', 'insurances.id')
-            ->join('types_of_insurance', 'types_of_insurance.id', '=', 'insurances.type_id')
-            ->get();
-        $insurances = DB::table('types_of_insurance')->get();
-        //date of preferential insurance begin
-        $dates = array();
-        for($i = 0; $i<=6; $i++){
-            $dates[] = Carbon::now()->subDays($i);
-        }
-        return view('pages.patients',compact('patients_data','insurances','dates','role','url'));}
-         else{
-       return redirect('/login');
-      }
+        if(HelpingFunctions::checkSession($request)){
+            $url = "patients";
+            $role = $request->session()->get('role');
+            $patients_data = DB::table('patients')
+                ->join('insurances', 'patients.id', '=', 'insurances.id')
+                ->join('types_of_insurance', 'types_of_insurance.id', '=', 'insurances.type_id')
+                ->get();
+            $insurances = DB::table('types_of_insurance')->get();
+            
+            //date of preferential insurance begin
+            $dates = array();
+            for($i = 0; $i<=6; $i++){
+                $dates[] = Carbon::now()->subDays($i);
+            }
+
+            return view('pages.patients',compact('patients_data','insurances','dates','role','url'));
+            } 
+        else return redirect('/login');
     }
+    
 
     //store new patient 
     public function store(Request $request){

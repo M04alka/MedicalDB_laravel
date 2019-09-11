@@ -8,6 +8,7 @@
       <th scope="col">Дата</th>
       <th scope="col">Диагноз</th>
       <th scope="col">Лечение</th>
+      <th scope="col">Оплата</th>
       <th scope="col">Лечащий врач</th>
     </tr>
   </thead>
@@ -21,6 +22,7 @@
       <td>{{$income->date}}</td>
       <td>{{$income->diagnosis}}</td>
       <td>{{$income->treatment}}</td>
+      <td></td>
       <td>{{$income->doctor_name}}</td>
     </tr>
     @else
@@ -31,6 +33,7 @@
       <td>{{$income->date}}</td>
       <td>{{$income->diagnosis}}</td>
       <td>{{$income->treatment}}</td>
+      <td></td>
       <td>{{$income->doctor_name}}</td>
     </tr>
     @endif

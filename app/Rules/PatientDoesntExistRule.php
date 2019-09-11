@@ -5,7 +5,7 @@ namespace App\Rules;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Validation\Rule;
 
-class PatientExistRule implements Rule
+class PatientDoesntExistRule implements Rule
 {
     /**
      * Create a new rule instance.
@@ -38,6 +38,6 @@ class PatientExistRule implements Rule
      */
     public function message()
     {
-        return 'Пациент с таким номером паспорта уже существует!';
+        return 'Пациента с таким номером паспорта не существует!';
     }
 }

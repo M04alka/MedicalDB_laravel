@@ -1,10 +1,10 @@
 <div class="card text-center text-white bg-danger mb-3 shadow" >
-	<h5 class="card-header">Постпление</h5>
+	<h5 class="card-header">Поступление</h5>
 	<div class="card-body">
 		<form method="post" action="/income/store">
 			{{ csrf_field() }}
 			<div class="form-group">
-				<input type="text" class="form-control" id="inputPassword4" placeholder="Рег. номер" name="reg_number">
+				<input type="text" class="form-control" id="inputPassword4" placeholder="Номер паспорта" name="reg_number">
 			</div>
 			<div class="form-group">
 				<label for="exampleFormControlTextarea1">Диагноз</label>

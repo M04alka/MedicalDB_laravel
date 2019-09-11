@@ -24,4 +24,11 @@ class HelpingFunctions extends Controller
     	$doctorId = DB::table('doctors')->where('doctor_name',$doctor)->value('id');
     	return $doctorId;
     }
+
+    static function checkSession(Request $request){
+        if($request->session()->has('doctor_name')){
+            return true;
+        }
+        else return false;
+    }
 }

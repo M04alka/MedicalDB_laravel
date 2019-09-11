@@ -10,17 +10,22 @@ class LoginController extends Controller
 {
     //get login page
     public function index(Request $request){
-        //$request->session()->flush();
+        $request->session()->forget('doctor_name','role');
         return view('pages.loginpage');
     }
 
     //authentication
     public function store(Request $request){  
-        $doctor = DB::table('doctors')
+        $doctor = Doctor::where('doctor_name',$request->input('doctor_name'))
+            ->where('password',$request->input('password'))
+            ->join('roles','doctors.role_id','roles.id')
+            ->first();
+        
+        /*DB::table('doctors')
         ->where('doctor_name',$request->input('doctor_name'))
         ->where('password',$request->input('password'))
         ->join('roles','doctors.role_id','roles.id')
-        ->first();
+        ->first();*/
 
         if(is_null($doctor)){
             return redirect('/login');
