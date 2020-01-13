@@ -3,6 +3,8 @@
 namespace App\Rules;
 
 use App\Patient;
+use App\Insurance;
+use App\Setting;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Contracts\Validation\Rule;
 
@@ -27,10 +29,13 @@ class IsInsuranceActiveRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        $id = Patient::where('reg_number', $value)->value('id');
-        if(is_null($id)) return false;
-        else{
-            $isActive = DB::table('insurances')->where('id', $id)->value('is_active');
+        $patient_id = Patient::where('reg_number', $value)->value('id');
+        $setting = Setting::where('setting_type','sell_pills_without_insurance' )->value('value');
+        if($setting) {
+            return true;
+        } 
+        else {
+            $isActive = Insurance::where('patient_id', $patient_id)->value('is_active');
             return $isActive;
         }
     }

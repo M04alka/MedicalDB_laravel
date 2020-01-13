@@ -1,8 +1,5 @@
-<div class="col-3">
-</div>
 
-<div class="col-6">
-  <div class="card text-center mar_from_nav shadow">
+  <div class="card text-center mar_from_nav shadow" style="width: 20rem;">
     <h5 class="card-header">Войти</h5>
     <div class="card-body">
       <form method="post" action="/login" >
@@ -24,7 +21,3 @@
       <a href="/signin">Создать акаунт</a>
     </div>
   </div>
-</div>
-
-<div class="col-3">
-</div>

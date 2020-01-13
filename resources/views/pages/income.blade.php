@@ -1,8 +1,8 @@
-@extends('masterfluid')
+@extends('master_fluid')
 
 @section('navbar')
   
-  @include('layouts.navbar.navbar')
+  @include('layouts.navbar.navbar_incomes')
 
 @endsection
 @section('content')
@@ -11,8 +11,8 @@
 			@include('layouts.income.list_of_income')
 		</div>
 		<div class="col-3">
-			@include('layouts.income.income_Form')
 			@include('messages.errors')
+			@include('layouts.income.income_Form')
 		</div>
 	</div>
 @endsection

@@ -11,66 +11,45 @@ class DoctorsTableSeeder extends Seeder
      */
     public function run()
     {
-         $admin = array(
+        $admin = array(
             array(
-                'doctor_name' => 'Феликс Фонтейн',
-                'password' => '123',
-                'reg_number' => 'MG882',
+                'doctor_name' => 'admin',
+                'password' => 'admin',
+                'reg_number' => 'AD001',
                 'is_fired' => '0',
                 'is_active' => '1',
-                'role_id' => '2'
+                'role_id' => '9',
+                'reason' => ''
             ),
             array(
-                'doctor_name' => 'Джереми Фонтейн',
-                'password' => '123',
-                'reg_number' => 'MG883',
+                'doctor_name' => 'ps',
+                'password' => 'ps',
+                'reg_number' => 'AD002',
                 'is_fired' => '0',
                 'is_active' => '1',
-                'role_id' => '3'
+                'role_id' => '6',
+                'reason' => ''
             ),
-            array(
-                'doctor_name' => 'Алекс Фонтейн',
-                'password' => '123',
-                'reg_number' => 'MG884',
+             array(
+                'doctor_name' => 'mc',
+                'password' => 'mc',
+                'reg_number' => 'AD003',
                 'is_fired' => '0',
                 'is_active' => '1',
-                'role_id' => '4'
+                'role_id' => '5',
+                'reason' => ''
             ),
-            array(
-                'doctor_name' => 'Энджел Фонтейн',
-                'password' => '123',
-                'reg_number' => 'MG885',
+             array(
+                'doctor_name' => 'mg',
+                'password' => 'mg',
+                'reg_number' => 'AD004',
                 'is_fired' => '0',
                 'is_active' => '1',
-                'role_id' => '5'
-            ),
-            array(
-                'doctor_name' => 'Ричард Фонтейн',
-                'password' => '123',
-                'reg_number' => 'MG886',
-                'is_fired' => '0',
-                'is_active' => '1',
-                'role_id' => '6'
-            ),
-            array(
-                'doctor_name' => 'Астрид Фонтейн',
-                'password' => '123',
-                'reg_number' => 'MG887',
-                'is_fired' => '0',
-                'is_active' => '1',
-                'role_id' => '7'
-            ),
-            array(
-                'doctor_name' => 'Мелинда Фонтейн',
-                'password' => '123',
-                'reg_number' => 'MG881',
-                'is_fired' => '0',
-                'is_active' => '1',
-                'role_id' => '8'
-            ),
+                'role_id' => '7',
+                'reason' => ''
+            )
         );
 
         DB::table('doctors')->insert($admin);
-    
     }
 }

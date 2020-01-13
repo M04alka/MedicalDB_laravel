@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Doctor;
+use App\Models\Services\DoctorService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -10,34 +10,24 @@ class LoginController extends Controller
 {
     //get login page
     public function index(Request $request){
-        $request->session()->forget('doctor_name','role');
+        $request->session()->forget(['doctor_name','role']);
         return view('pages.loginpage');
     }
 
     //authentication
-    public function store(Request $request){  
-        $doctor = Doctor::where('doctor_name',$request->input('doctor_name'))
-            ->where('password',$request->input('password'))
-            ->join('roles','doctors.role_id','roles.id')
-            ->first();
-        
-        /*DB::table('doctors')
-        ->where('doctor_name',$request->input('doctor_name'))
-        ->where('password',$request->input('password'))
-        ->join('roles','doctors.role_id','roles.id')
-        ->first();*/
-
-        if(is_null($doctor)){
-            return redirect('/login');
+    public function store(Request $request){
+        $doctor = new DoctorService();
+        $result = $doctor->authorization($request->input('doctor_name'), $request->input('password'));
+        if(empty($result)){
+            return back()->withErrors(["error_msg" => "Пользователь с таким именем не найден!"]);
         }
-        elseif(!is_null($doctor) && $doctor->is_active!=true){ 
-            return redirect('/login');
+        elseif(!empty($result) && $result->is_active!=true){ 
+            return back()->withErrors(["error_msg" => "Ваш аккаунт еще не активирован. Ожидайте!"]);
         }
         else{ 
-
-            $request->session()->put('role',$doctor->role);
-            $request->session()->put('doctor_name',$doctor->doctor_name);
-            return redirect('/main');
-        } 
+            $request->session()->put('role',$result->role_name);
+            $request->session()->put('doctor_name',$result->doctor_name);
+            return redirect('/info'); 
+        }   
     }
 }

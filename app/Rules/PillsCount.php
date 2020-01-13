@@ -26,10 +26,9 @@ class PillsCount implements Rule
      */
     public function passes($attribute, $value)
     {
-        if($value>5){
-            return false;
-        }
-        return true;
+        $pills_count = DB::table('settings')->where('setting_type','pills_count')->value('value');
+        if($value>$pills_count) return false;
+        else return true;
     }
 
     /**
@@ -39,6 +38,6 @@ class PillsCount implements Rule
      */
     public function message()
     {
-        return 'Нельзя продовать больше 5 таблеток!';
+        return 'Нельзя продовать данное количество таблеток!';
     }
 }

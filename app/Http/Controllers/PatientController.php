@@ -2,85 +2,84 @@
 
 namespace App\Http\Controllers;
 
-use App\MedicalCertificate;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\PsychologicalCertificate;
-use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\HelpingFunctions;
+use App\Models\Services\InsuranceService;
+use App\Models\Services\PatientService;
+use App\Models\Services\PillService;
+use App\Models\Services\DoctorService;
 
 class PatientController extends Controller
 {
-    //get patient card
-    public function index(Request $request, $patient){
-        $role = $request->session()->get('role');
-        $name = $request->session()->get('doctor_name');
-        $url = "patient";
-        $patient_data = DB::table('patients')->where('patient_name',$patient)
-            ->join('insurances', 'patients.id', 'insurances.id')
-            ->join('types_of_insurance', 'insurances.type_id', 'types_of_insurance.id')
-            ->select('patients.id','patient_name','reg_number','type','medical_certificate_id','psychological_certificate_id')
-            ->first();
-          
-        if(is_null($patient_data->medical_certificate_id)){
-            $med_cert = false;
-        }
-        else $med_cert = DB::table('medical_certificates')
-            ->where('patient_id', $patient_data->id)->get();
-
-        if(is_null($patient_data->psychological_certificate_id)){
-            $psy_cert = false;
-        }
-        else $psy_cert = DB::table('psychological_certificates')
-            ->where('patient_id', $patient_data->id)->get();
-            
-        return view('pages.patient',compact('patient_data','role','med_cert','psy_cert','name','url'));
+    public function index(Request $request){
+    	$insurance = new InsuranceService();
+    	$patient = new PatientService();
+    	$insurances = $insurance->getInsurances();
+    	$patientsData = $patient->getPatientsList();
+    	$permissions = $patient->getPatientsPagePermissions($request->session()->get('role'));
+        return view('pages.patients',compact('patientsData','insurances','permissions'));
     }
 
-    //store med certificate for users insurance
+    public function store(Request $request){
+    	$patient = new PatientService();
+    	$patient->registerNewPatient($request->input('patient_name'), $request->input('reg_number'), false);
+        return redirect('/patients');
+    }
+
+    public function update(Request $request){
+        $patient = new PatientService();
+        $patietnId = $patient->getPatientsIdByRegNumber($request->input('reg_number'));
+        $update = $patient->updateInsurance($patietnId, $request->input('insurance_type'));
+        return redirect('/patients');
+    }
+
+    public function show(Request $request, $regNumber){
+        $patient = new PatientService();
+        $role = $request->session()->get('role');
+        $permissions = $patient->getPatientPagePermissions($request->session()->get('role'));
+        $patientData = $patient->getPatientInsurance($regNumber);
+        $medCertificate = $patient->getMedSertificate($patientData->medical_certificate_id, $patientData->id);
+        $psyCertificate = $patient->getPsySertificate($patientData->psychological_certificate_id, $patientData->id);
+        $drivingCertificate = $patient->getDrivingCertificate($patientData->id);
+        $weaponCertificate = $patient->getWeaponCertificate($patientData->id);
+        $pill = new PillService();
+        $pills = $pill->getPillsWithRecipe();
+        $recipes = $pill->getPatientsRecipes($patientData->id);
+        return view('pages.patient',compact('patientData','medCertificate','psyCertificate','permissions','drivingCertificate','weaponCertificate','pills','recipes','role'));
+    }
+
+    public function storeRecipe(Request $request){
+        $doctor = new DoctorService();
+        $recipe = new PatientService();
+        $store = $recipe->storeRecipe(
+            $recipe->getPatientsIdByRegNumber($request->input('reg_number')),
+            $request->input('diagnosis'),
+            $request->input('type'),
+            $request->input('days'),
+            $request->input('pills_amount'),
+            $doctor->getIdByName($request->session()->get('doctor_name'))  
+        );
+        return redirect('/patients'.'/'.$request->input('reg_number'));
+    }
+
+    /*
+    public function storeDrivingCertificate(){
+        
+    }
+
+    public function storeWeaponCertificate(){
+        
+    }
+    */
+
     public function medCertifStore(Request $request){
-        $role = $request->session()->get('role');
-        $doctor = $request->session()->get('doctor_name');
-        $patient = HelpingFunctions::getPatientsName($request->input('reg_number'));
-        $patientId = HelpingFunctions::getPatientsId($request->input('reg_number'));
-        $doctorId = HelpingFunctions::getDoctorsId($doctor);
-        $medicalCertificate = new MedicalCertificate();
-        $medicalCertificate->patient_id = $patientId;
-        $medicalCertificate->date = Carbon::now();
-        $medicalCertificate->details = $request->input('details');
-        $medicalCertificate->doctors_id = $doctorId;
-        $medicalCertificate->save();
-        $this->updateMedInsurance($patientId);
-        return redirect('/patients'.'/'.$patient)->with('role');
+        $patient = new PatientService();
+        $patient->storeMedicalCertificate($request->input('reg_number'),$request->input('details'),$request->session()->get('doctor_name'));
+        return redirect('/patients'.'/'.$request->input('reg_number'));
     }
 
-    //store psy certificate for users insurance
     public function psychCertifStore(Request $request){
-        $role = $request->session()->get('role');
-        $doctor = $request->session()->get('doctor_name');
-        $patient = HelpingFunctions::getPatientsName($request->input('reg_number'));
-        $patientId = HelpingFunctions::getPatientsId($request->input('reg_number'));
-        $doctorId = HelpingFunctions::getDoctorsId($doctor);
-        $psychologicalCertificate = new PsychologicalCertificate();
-        $psychologicalCertificate->patient_id = $patientId;
-        $psychologicalCertificate->date = Carbon::now();
-        $psychologicalCertificate->details = $request->input('details');
-        $psychologicalCertificate->doctors_id = $doctorId;
-        $psychologicalCertificate->save();
-        $error = false;
-        $this->updatePsyInsurance($patientId);
-        return redirect('/patients'.'/'.$patient)->with('role','error');   
-    }
-
-    //update insurance field medical_certificate_id
-    private function updateMedInsurance($id){
-        $medId = DB::table('medical_certificates')->where('patient_id',$id)->value('id');
-        DB::table('insurances')->where('id',$id)->update(['medical_certificate_id' => $medId ]);
-    }
-
-    //update insurance field psychological_certificate_id
-    private function updatePsyInsurance($id){
-        $psyId = DB::table('psychological_certificates')->where('patient_id',$id)->value('id');
-        DB::table('insurances')->where('id',$id)->update(['psychological_certificate_id' => $psyId]);
+        $patient = new PatientService();
+        $patient->storePsychologicalCertificate($request->input('reg_number'),$request->input('details'),$request->session()->get('doctor_name'));
+        return redirect('/patients'.'/'.$request->input('reg_number'));
     }
 }

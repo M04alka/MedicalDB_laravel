@@ -1,8 +1,8 @@
-@extends('master')
+@extends('master_fluid')
 
 @section('navbar')
 
-	@include('layouts.navbar.navbar')
+	@include('layouts.navbar.navbar_info')
 
 @endsection
 

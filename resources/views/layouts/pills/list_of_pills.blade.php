@@ -18,7 +18,14 @@
       <th scope="row">{{$sale->id}}</th>
       <td>{{$sale->patient_name}}</td>
       <td>{{$sale->reg_number}}</td>
-      <td>{{$sale->date}}</td>
+      <td>
+        @php
+          $words = str_ireplace( '-', '.', $sale->date);
+          $words1 = explode('.',$words);
+          $words2 = array_reverse($words1);
+          echo implode('.',$words2);
+        @endphp
+      </td>
       <td>{{$sale->type}}</td>
       <td>{{$sale->ammount}}</td>
       <td>{{$sale->doctor_name}}</td>
@@ -28,7 +35,14 @@
       <th scope="row">{{$sale->id}}</th>
       <td>{{$sale->patient_name}}</td>
       <td>{{$sale->reg_number}}</td>
-      <td>{{$sale->date}}</td>
+      <td>
+        @php
+          $words = str_ireplace( '-', '.', $sale->date);
+          $words1 = explode('.',$words);
+          $words2 = array_reverse($words1);
+          echo implode('.',$words2);
+        @endphp
+      </td>
       <td>{{$sale->type}}</td>
       <td>{{$sale->ammount}}</td>
       <td>{{$sale->doctor_name}}</td>
@@ -37,3 +51,5 @@
     @endforeach
   </tbody>
 </table>
+
+{{ $sales->onEachSide(3)->links() }}

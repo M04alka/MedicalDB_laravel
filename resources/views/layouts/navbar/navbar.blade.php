@@ -1,4 +1,4 @@
-<div class="mar_from_nav">
+<!--<div class="mar_from_nav">
   <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light nav_shadow">
     <a class="navbar-brand" href="/main">
       <img src="/pictures/med_logo.svg" width="30" height="30" class="d-inline-block align-top" alt="">
@@ -7,6 +7,12 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         @switch($url)
+          @case('signin')
+          
+            @break 
+          @case('login')
+          
+            @break
           @case('patients')
             <li class="nav-item active font-weight-bold">
               <a class="nav-link" href="/patients">Пациенты </a>
@@ -104,8 +110,37 @@
       <form class="form-inline" method= "GET" action="/find">
         <input class="form-control mr-sm-2" type="search" placeholder="Рег. номер" aria-label="Search" name = "reg_number">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Поиск</button>
+        
       </form>
-      <a href="/login" class="btn btn-primary">Выйти</a>
+     <a href="/login" class="btn btn-primary">Выйти</a>
     </div>
   </nav>
-</div>
+ </div> 
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search">
+     
+      <button class="btn btn-outline-success my-2 my-sm-0 mar_r" type="submit">Search</button>
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+    </form> 
+  </div>
+</nav>-->

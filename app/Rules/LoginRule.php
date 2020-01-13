@@ -25,7 +25,9 @@ class LoginRule implements Rule
      */
     public function passes($attribute, $value)
     {
-        //
+      
+        else return true;
+
     }
 
     /**

@@ -2,7 +2,7 @@
 
 @section('navbar')
 
-	@include('layouts.navbar.navbar')
+	@include('layouts.navbar.navbar_fired')
 
 @endsection
 
