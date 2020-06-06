@@ -12,9 +12,13 @@
       <li class="nav-item">
         <a class="nav-link" href="/incomes">База данных</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/hospital">Стационар</a>
+      </li>
       <li class="nav-item active font-weight-bold">
         <a class="nav-link" href="/morgue">Морг</a>
       </li>
+      
       @include('layouts\navbar\admin_tabs')
 
     </ul>

@@ -18,7 +18,7 @@ class DoctorsTableSeeder extends Seeder
                 'reg_number' => 'AD001',
                 'is_fired' => '0',
                 'is_active' => '1',
-                'role_id' => '9',
+                'role_id' => '10',
                 'reason' => ''
             ),
             array(

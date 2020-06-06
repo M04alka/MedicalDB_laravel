@@ -10,7 +10,7 @@ use App\Models\Services\InfoService;
 class InfoController extends Controller
 {
     public function index(Request $request){
-    	$role = $request->session()->get('role');
+    	$role = strval ($request->session()->get('role'));
     	$pill = new PillService();
     	$insurance = new InsuranceService();
     	$info = new InfoService();

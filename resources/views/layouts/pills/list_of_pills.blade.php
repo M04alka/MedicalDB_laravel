@@ -26,7 +26,7 @@
           echo implode('.',$words2);
         @endphp
       </td>
-      <td>{{$sale->type}}</td>
+      <td>{{$sale->pill_name}}</td>
       <td>{{$sale->ammount}}</td>
       <td>{{$sale->doctor_name}}</td>
     </tr>
@@ -43,7 +43,7 @@
           echo implode('.',$words2);
         @endphp
       </td>
-      <td>{{$sale->type}}</td>
+      <td>{{$sale->pill_name}}</td>
       <td>{{$sale->ammount}}</td>
       <td>{{$sale->doctor_name}}</td>
     </tr>

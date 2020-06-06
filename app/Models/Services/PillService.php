@@ -19,7 +19,7 @@ class PillService
     	        ->join('pill_types', 'pills.pill_type_id', 'pill_types.id')
                 ->join('doctors', 'pills.doctors_id', 'doctors.id')
                 ->join('patients', 'pills.patient_id', 'patients.id')
-                ->select('pills.id','patient_name','patients.reg_number','date', 'type','ammount','doctor_name')
+                ->select('pills.id','patient_name','patients.reg_number','date', 'pill_name','ammount','doctor_name')
                 ->orderBy('pills.id', 'asc')
     	        ->paginate(8);
     	return $sales;

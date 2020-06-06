@@ -1,5 +1,5 @@
 <ul class="list-group">
-    @foreach($workers as $worker)
+    @foreach($doctors as $worker)
         <div class="card mar_bottom shadow" style="max-width: 24rem;">
             <h5 class="card-header bg-info text-white">Сотрудник : {{$worker->doctor_name}}</h5>
             <div class="card-body">

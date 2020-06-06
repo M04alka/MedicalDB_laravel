@@ -17,7 +17,7 @@ class PatientService
 
     //PATIENTS PAGE FUNCTIONS
 
-	public function registerNewPatient($patientName, $regNumber, bool $isDead){
+	public function registerNewPatient(string $patientName, string $regNumber, bool $isDead){
 		$patient = new Patient();
 		$patient->patient_name = $patientName;
 		$patient->reg_number = $regNumber;

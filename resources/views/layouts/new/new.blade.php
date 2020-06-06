@@ -1,5 +1,5 @@
 <ul class="list-group">
-    @foreach($new as  $ne)
+    @foreach($newUsers as  $ne)
 	   <div class="card mar_bottom shadow" style="max-width: 32rem;" >
             <h5 class="card-header bg-light text-darck">{{$ne->doctor_name}}</h5>
             <div class="card-body">

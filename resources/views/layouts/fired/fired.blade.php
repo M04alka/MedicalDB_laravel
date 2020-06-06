@@ -1,5 +1,5 @@
 <ul class="list-group">
-	@foreach($fired as $person)
+	@foreach($fireDoctors as $person)
 		<div class="card mar_bottom shadow" style="max-width: 32rem;" >
         	<h5 class="card-header bg-light text-darck">{{$person->doctor_name}}</h5>
         	<div class="card-body">
