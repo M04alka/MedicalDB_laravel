@@ -41,6 +41,8 @@ Route::get('/patients','PatientController@index');
 Route::post('/patients/store','PatientController@store');
 //--update patient insurance--//
 Route::post('/insurance/update','PatientController@update');
+//--update patient insurance--//
+Route::get('/insurance/active/{reg_number}','PatientController@activateInsurance');
 
 //==================//
 

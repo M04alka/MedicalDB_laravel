@@ -244,4 +244,9 @@ class PatientService
     private function insuranceAutoActive(int $patientId){
         Insurance::where('patient_id', $patientId)->update(['is_active'=>true]);
     }    
+
+    public function activatePatientInsurance(string $regnumber){
+        $patientId = $this->getPatientsIdByRegNumber($regnumber);
+        Insurance::where('patient_id', $patientId)->update(['is_active'=>true]);
+    }
 }

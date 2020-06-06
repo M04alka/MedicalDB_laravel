@@ -10,24 +10,25 @@ use App\Models\Services\DoctorService;
 
 class PatientController extends Controller
 {
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    //PATIENTS PAGE
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    
+
     //method for /patients page
     public function index(Request $request){
     	$insurance = new InsuranceService();
     	$patient = new PatientService();
     	$insurances = $insurance->getInsurances();
     	$patientsData = $patient->getPatientsList();
-    	$permissions = $patient->getPatientsPagePermissions($request->session()->get('role'));
+        $permissions = $patient->getPatientsPagePermissions($request->session()->get('role'));
         return view('pages.patients',compact('patientsData','insurances','permissions'));
     }
 
     //method for adding new patient
     public function store(Request $request){
     	$patient = new PatientService();
-    	$patient->registerNewPatient(strval($request->input('patient_name')), strval($request->input('reg_number')), false);
+    	$patient->registerNewPatient(
+            strval($request->input('patient_name')), 
+            strval($request->input('reg_number')), 
+            false
+        );
         return redirect('/patients');
     }
 
@@ -39,12 +40,12 @@ class PatientController extends Controller
         return redirect('/patients');
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
-    //PATIENT PAGE
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
+    //active user insurance
+    public function activateInsurance(Request $request, $regNumber){
+        $patient = new PatientService();
+        $patientId = $patient->activatePatientInsurance($regNumber);
+        return redirect('/patients');
+    }
 
     //method for /patient page
     public function show(Request $request, $regNumber){
@@ -98,5 +99,4 @@ class PatientController extends Controller
         return redirect('/patients'.'/'.$request->input('reg_number'));
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////////
 }
