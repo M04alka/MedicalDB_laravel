@@ -16,7 +16,7 @@ class InfoController extends Controller
     	$info = new InfoService();
     	$pills = $pill->getPills();
     	$insurances = $insurance->getInsurances();
-    	$permissions = $info->getInfoPermission($role);
+		$permissions = $info->getInfoPermission($role);
     	return view('pages.info',compact('insurances','pills','role','permissions'));
     }
 }

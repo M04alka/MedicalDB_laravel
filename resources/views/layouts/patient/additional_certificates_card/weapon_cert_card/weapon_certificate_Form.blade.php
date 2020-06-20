@@ -1,7 +1,7 @@
 <div class="card text-center text-white bg-primary mb-3 shadow" >
 	<h5 class="card-header">Оформить справку для оружия</h5>
 	<div class="card-body">
-		<form method="post" action="/pscertificate/store">
+		<form method="post" action="/wpcertificate/store">
 			{{ csrf_field() }}
 			<div class="form-group">
 				<input type="hidden" class="form-control" id="inputPassword4" placeholder="Рег. номер" name="reg_number" value="{{$patientData->reg_number}}" readonly>

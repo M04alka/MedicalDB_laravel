@@ -50,13 +50,17 @@ Route::get('/insurance/active/{reg_number}','PatientController@activateInsurance
 //==PATIENT CARD ROUTES==//
 
 //--patient page--//
-Route::get('/patients/{reg_number}','PatientController@show');
+Route::get('/patients/{reg_number}','PatientCardController@show');
 //--store med certificate--//
-Route::post('/medcertificate/store','PatientController@medCertifStore');
+Route::post('/medcertificate/store','PatientCardController@medCertifStore');
 //--store psy certificate--//
-Route::post('/pscertificate/store','PatientController@psychCertifStore');
+Route::post('/pscertificate/store','PatientCardController@psychCertifStore');
+//--store driving certificate--//
+Route::post('/drcertificate/store','PatientCardController@storeDrivingCertificate');
+//--store weapon certificate--//
+Route::post('/wpcertificate/store','PatientCardController@storeWeaponCertificate');
 //--store new recipe--//
-Route::post('/recipe/store','PatientController@storeRecipe');
+Route::post('/recipe/store','PatientCardController@storeRecipe');
 
 //==================//
 

@@ -18,6 +18,7 @@ class LoginController extends Controller
     public function store(Request $request){
         $doctor = new DoctorService();
         $result = $doctor->authorization($request->input('doctor_name'), $request->input('password'));
+        //dd($result);
         if(empty($result)){
             return back()->withErrors(["error_msg" => "Пользователь с таким именем не найден!"]);
         }
@@ -27,6 +28,7 @@ class LoginController extends Controller
         else{ 
             $request->session()->put('role',$result->role_name);
             $request->session()->put('doctor_name',$result->doctor_name);
+            $request->session()->put('doctor_id',$result->id);
             return redirect('/info'); 
         }   
     }

@@ -47,7 +47,7 @@
                   	@endif
                 </p>
                 <a href="{{'/patients/'.trim($patientCard->reg_number)}}" class="btn btn-info">Профиль пациента</a>
-				@if($patientCard->is_active == false)
+				@if($patientCard->is_active == false && $patientCard->medical_certificate_id!=null && $patientCard->psychological_certificate_id!=null)
                 	<a href="{{'/insurance/active/'.trim($patientCard->reg_number)}}" class="btn btn-info">Активировать страховку</a>
 				@else
 

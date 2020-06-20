@@ -38,7 +38,7 @@ class PillService
         return $pillsTypes = DB::table('pill_types')->where('pill_recipe',true)->get();
     }
 
-    public function getPatientsRecipes(int $patientId){
+    public function getPatientRecipes(int $patientId){
         return $recipes = Recipe::where('patient_id', $patientId)
                     ->join('pill_types', 'recipes.pill_type_id', 'pill_types.id')
                     ->join('doctors', 'recipes.doctor_id', 'doctors.id')

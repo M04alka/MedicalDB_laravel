@@ -13,7 +13,7 @@ class DoctorService
                 ['password', $regNumber]
             ])
             ->join('roles','doctors.role_id','roles.id')
-            ->first();
+            ->first(['doctors.id','doctor_name', 'is_active', 'role_name']);
         return $doctor;    
     }
 
